@@ -6,6 +6,7 @@ from zipfile import ZipFile
 from ftplib import FTP
 
 
+# AQUI TALVEZ POSSA SER RETIRADO PRA NÃO PRECISAR ABRIR DUAS VEZES O FTP
 def getfullfilename(year: int, month: int):
     TabelaUnificada = 'TabelaUnificada_{}{}'.format(year,month)
     ftp = FTP("ftp2.datasus.gov.br")
@@ -31,7 +32,7 @@ def download(file: str, year: int, month: int, cache: bool=True) -> object:
     df = (pd.DataFrame([x.split('\r\n') for x in content.split('\r\n')]))
     FinalDF = pd.DataFrame(columns=dfcol['Coluna'].tolist())
     
-    # TEM QUE MELHORAR AQUI
+    # AQUI TEM QUE ACHAR UMA MANEIRA MAIS EFETIVA QUE O FOR
     for i in dfcol.index:
         inicio = int(dfcol.loc[i]['Inicio'])
         fim = int(dfcol.loc[i]['Fim'])
